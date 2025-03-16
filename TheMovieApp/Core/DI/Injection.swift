@@ -7,6 +7,8 @@
 
 import Foundation
 import CoreData
+import Core
+import Category
 
 final class Injection: NSObject {
     
@@ -34,5 +36,20 @@ final class Injection: NSObject {
     func provideFavorite(persistenContainer: NSPersistentContainer) -> FavoriteUseCase {
         let repository = provideRepository(persistentContainer: persistenContainer)
         return FavoriteInteractor(repository: repository)
+    }
+    
+    @MainActor
+    func provideCategory<U: UseCase>(persistentContainer: NSPersistentContainer) -> U where U.Request == MovieCategoryType, U.Response == [CategoryDomainModel] {
+        let locale = GetCategoriesLocaleDataSource(context: persistentContainer.viewContext)
+        let remote = GetCategoriesRemoteDataSource()
+        let mapper = CategoryTransformer(context: persistentContainer.viewContext)
+        
+        let repository = GetCategoriesRepository(
+            localeDataSource: locale,
+            remoteDataSource: remote,
+            mapper: mapper
+        )
+        
+        return Interactor(repository: repository) as! U
     }
 }
