@@ -1,0 +1,33 @@
+{
+  "originHash" : "f5bc8ab887ee60d0f6dfdaea6d73a2076e8fdeabf04a2ddbd9837cd5c88613ac",
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "swiftui-cached-async-image",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
+      "state" : {
+        "revision" : "467a3d17479887943ab917a379e62bbaff60ac8a",
+        "version" : "2.1.1"
+      }
+    },
+    {
+      "identity" : "themovieapp-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Ikhsannrdnsyh/TheMovieApp-Core",
+      "state" : {
+        "revision" : "3bf6a98affd3229a1f2bc3d6b5d8a6ddf1c14329",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}

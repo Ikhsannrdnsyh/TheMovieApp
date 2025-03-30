@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  TheMovieApp
+
+  Created by Mochamad Ikhsan Nurdiansyah on 29/03/25.
+  
+*/
+
+"titleHome" = "MyMovies";
+"NowPlayingTitle" = "Now Playing";
+"loadingTitleNowPlaying" = "Loading Now Playing...";
+"noMovie" = "No movies available.";
+"inValid" = "Invalid category";
+
+"popularTitle" = "Popular";
+"loadingTitlePopular" = "Loading Now Playing...";
+
+"searchTitle" = "Search";
+"searchMovie" = "Search movies...";
+"noResult" = "No results found";
+
+"favoritTitle" = "Favorite Movies";
+"noFavoriteMovie" = "You Haven't Favorite Movies";
+"reload" = "Reload";
+
+"detailTitle" = "Movie Detail";
+"loadingDetail" = "Loading...";
+"retry" = "Retry";
+"releasedList" = "Released     : ";
+"durationList" = "Duration     : ";
+"descList" = "Description  : ";
+"noImageAvail" = "Image Not Available";
+
+"appearance" = "Appearance";
+"enableDarkMode" = "Enable Dark Mode";
+

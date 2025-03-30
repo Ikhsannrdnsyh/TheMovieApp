@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  TheMovieApp
+
+  Created by Mochamad Ikhsan Nurdiansyah on 29/03/25.
+  
+*/
+
+"titleHome" = "Film";
+"NowPlayingTitle" = "Sedang Berjalan";
+"loadingTitleNowPlaying" = "Memuat Film Sedang Berjalan...";
+"noMovie" = "Tidak ada Film yang tersedia";
+"inValid" = "Kategori tidak valid";
+
+"popularTitle" = "Populer";
+"loadingTitlePopular" = "Memuat Film Populer...";
+
+"searchTitle" = "Cari";
+"searchMovie" = "Cari Film...";
+"noResult" = "Pencarian Tidak Ada";
+
+"favoritTitle" = "Film Favorit";
+"noFavoriteMovie" = "Kamu Tidak Memiliki Film Favorit";
+"reload" = "Muat Ulang";
+
+"detailTitle" = "Detail Film";
+"loadingDetail" = "Memuat...";
+"retry" = "Ulang";
+"releasedList" = "Rilis        : ";
+"durationList" = "Durasi       : ";
+"descList" = "Deskripsi    : ";
+"noImageAvail" = "Gambar Tidak Tersedia";
+
+"appearance" = "Tampilan";
+"enableDarkMode" = "Aktifkan Mode Gelap";
+
