@@ -35,15 +35,22 @@ where Interactor.Request == Request, Interactor.Response == Response {
                 switch completion {
                 case .failure(let error):
                     self.error = error.localizedDescription
-                    print("❌ Error mengambil data favorit: \(error.localizedDescription)") // Debugging
+                    print("❌ Error mengambil data favorit: \(error.localizedDescription)")
                 case .finished:
                     break
                 }
             }, receiveValue: { movies in
                 self.movies = movies
-                print("📌 Data favorit ditemukan: \(String(describing: movies))") // Debugging
+                print("📌 Data favorit ditemukan: \(String(describing: movies))")
+                
+                if let moviesArray = movies as? [CategoryDomainModel] {
+                    for movie in moviesArray {
+                        print("🎬 Favorit: \(movie.id) - \(movie.title)")
+                    }
+                } else {
+                    print("⚠️ Data favorit tidak berbentuk array yang diharapkan.")
+                }
             })
             .store(in: &cancellables)
     }
-    
 }

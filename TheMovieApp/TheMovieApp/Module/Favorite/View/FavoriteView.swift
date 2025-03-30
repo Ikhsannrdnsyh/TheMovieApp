@@ -59,6 +59,11 @@ struct FavoriteView: View {
             .refreshable {
                 presenter.getFavoriteMovies()
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("FavoriteStatusChanged"))) { _ in
+                print("🔄 Refreshing favorite movies")
+                presenter.getFavoriteMovies()
+            }
+
         }
     }
     

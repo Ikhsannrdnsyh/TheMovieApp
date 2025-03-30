@@ -59,7 +59,7 @@ where Interactor.Request == Request, Interactor.Response == Response {
     @MainActor
     public func toggleFavoriteStatus() {
         guard var movie = movie as? CategoryDomainModel else {
-            print("❌ Error: Movie data is nil or not a CategoryDomainModel")
+            print("❌ Error: Movie data is nil atau bukan CategoryDomainModel")
             return
         }
 
@@ -72,7 +72,7 @@ where Interactor.Request == Request, Interactor.Response == Response {
 
         let context = CoreDataManager.shared.persistentContainer.viewContext
         guard let movieEntity = FavoriteTransformer.transformDomainToEntity(domain: movie, context: context) else {
-            print("❌ Error: Failed to convert CategoryDomainModel to MoviesEntity")
+            print("❌ Error: Gagal mengonversi CategoryDomainModel ke MoviesEntity")
             return
         }
 
@@ -82,16 +82,16 @@ where Interactor.Request == Request, Interactor.Response == Response {
                 switch completion {
                 case .failure(let error):
                     self.error = error.localizedDescription
-                    print("❌ Error updating favorite: \(error.localizedDescription)")
+                    print("❌ Error menyimpan favorit: \(error.localizedDescription)")
                 case .finished:
-                    break
+                    print("✅ Perubahan status favorit berhasil disimpan ke Core Data.")
+                    NotificationCenter.default.post(name: NSNotification.Name("FavoriteStatusChanged"), object: nil)
                 }
             }, receiveValue: { success in
                 if success {
-                    print("✅ Favorite status updated successfully in Core Data.")
-                    NotificationCenter.default.post(name: NSNotification.Name("FavoriteStatusChanged"), object: nil)
+                    print("✅ Core Data sukses menyimpan perubahan favorit.")
                 } else {
-                    print("⚠️ Failed to update favorite status.")
+                    print("⚠️ Gagal menyimpan perubahan favorit ke Core Data.")
                 }
             })
             .store(in: &cancellables)

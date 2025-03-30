@@ -14,7 +14,7 @@ import Common
 
 struct DetailView: View {
     @ObservedObject var presenter: GetDetailPresenter<Int, CategoryDomainModel, Interactor<Int, CategoryDomainModel, GetDetailRepository<GetDetailLocaleDataSource, GetDetailRemoteDataSource, DetailTransformer>>>
-    
+
     var body: some View {
         ZStack {
             if presenter.isLoading {
@@ -48,15 +48,33 @@ struct DetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    presenter.toggleFavoriteStatus()
+                    toggleFavorite()
                 }) {
-                    Image(systemName: presenter.isFavorite ? "heart.fill" : "heart")
+                    Image(systemName: presenter.isFavorite ? "heart.fill" : "heart") 
                         .foregroundColor(.red)
                 }
             }
         }
         .onAppear {
             presenter.getMovieDetail()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("FavoriteStatusChanged"))) { _ in
+            print("🔄 Refreshing movie detail after favorite toggle")
+            presenter.getMovieDetail()
+        }
+    }
+
+    private func toggleFavorite() {
+        guard let movie = presenter.movie else { return }
+
+        print("🔵 Toggle button clicked")
+        print("🔄 Before toggle: \(presenter.isFavorite) -> After toggle: \(!presenter.isFavorite)")
+
+        presenter.isFavorite.toggle() // 🟢 Langsung ubah di presenter
+        presenter.toggleFavoriteStatus()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            NotificationCenter.default.post(name: NSNotification.Name("FavoriteStatusChanged"), object: nil)
         }
     }
 }
