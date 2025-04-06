@@ -30,7 +30,7 @@ Transformer.Domain == [CategoryDomainModel] {
     private let remoteDataSource: DetailRemote
     private let mapper: Transformer
     private let categoryType: MovieCategoryType
-
+    
     public init(
         localeDataSource: DetailLocale,
         remoteDataSource: DetailRemote,
@@ -76,19 +76,26 @@ Transformer.Domain == [CategoryDomainModel] {
     private func fetchFromRemote(movieId: Int) -> AnyPublisher<CategoryDomainModel, Error> {
         return remoteDataSource.execute(request: movieId)
             .map { response in
-                return mapper.transformResponseToEntity(response: response, category: self.categoryType.rawValue.lowercased())
+                let entities = mapper.transformResponseToEntity(
+                    response: response,
+                    category: self.categoryType.rawValue.lowercased()
+                )
+                return entities
             }
-            .flatMap { entity -> AnyPublisher<CategoryDomainModel, Error> in
-                let domainModels = mapper.transformEntityToDomain(entity: entity)
+            .tryMap { entities in
+                let domainModels = mapper.transformEntityToDomain(entity: entities)
+                
                 if let domainModel = domainModels.first {
-                    return Just(domainModel)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
+                    return domainModel
                 } else {
-                    return Fail(error: NSError(domain: "EmptyData", code: 404, userInfo: [NSLocalizedDescriptionKey: "Data tidak ditemukan"]))
-                        .eraseToAnyPublisher()
+                    throw NSError(
+                        domain: "EmptyData",
+                        code: 404,
+                        userInfo: [NSLocalizedDescriptionKey: "Data tidak ditemukan dari API"]
+                    )
                 }
             }
             .eraseToAnyPublisher()
     }
+    
 }

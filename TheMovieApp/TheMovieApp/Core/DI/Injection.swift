@@ -31,18 +31,28 @@ final class Injection: NSObject {
                                        }
     
     @MainActor
-    func provideDetailMovie(movieId: CategoryDomainModel.ID, categoryType: MovieCategoryType) -> GetDetailPresenter<
+    func provideDetailMovie(
+        movieId: CategoryDomainModel.ID,
+        categoryType: MovieCategoryType
+    ) -> GetDetailPresenter<
         Int,
         CategoryDomainModel,
-        Interactor<Int, CategoryDomainModel, GetDetailRepository<GetDetailLocaleDataSource, GetDetailRemoteDataSource, DetailTransformer>>
+        Interactor<
+            Int,
+            CategoryDomainModel,
+            GetDetailRepository<
+                GetDetailLocaleDataSource,
+                GetDetailRemoteDataSource,
+                DetailTransformer
+            >
+        >
     > {
-        
         let context = CoreDataManager.shared.context
         let localeDataSource = GetDetailLocaleDataSource(context: context)
         let remoteDataSource = GetDetailRemoteDataSource()
         let mapper = DetailTransformer(context: context)
         
-        let repository = GetDetailRepository<GetDetailLocaleDataSource, GetDetailRemoteDataSource, DetailTransformer>(
+        let repository = GetDetailRepository(
             localeDataSource: localeDataSource,
             remoteDataSource: remoteDataSource,
             mapper: mapper,
@@ -54,20 +64,19 @@ final class Injection: NSObject {
         let favoriteLocaleDataSource = GetFavoriteLocaleDataSource()
         let favoriteRemoteDataSource = GetFavoriteRemoteDataSource()
         let favoriteTransformer = FavoriteTransformer()
-
-        let favoriteRepository = GetFavoritesRepository<GetFavoriteLocaleDataSource, GetFavoriteRemoteDataSource>(
+        
+        let favoriteRepository = GetFavoritesRepository(
             localDataSource: favoriteLocaleDataSource,
             remoteDataSource: favoriteRemoteDataSource,
             transformer: favoriteTransformer
         )
-
+        
         return GetDetailPresenter(
             movieId: Int(movieId),
             useCase: interactor,
             favoriteRepository: favoriteRepository
         )
     }
-
     
     @MainActor
     func provideFavoriteMovies() -> GetFavoritePresenter<
@@ -102,16 +111,16 @@ final class Injection: NSObject {
         let localeDataSource = GetSearchLocaleDataSource(context: context)
         let remoteDataSource = GetSearchRemoteDataSource()
         let mapper = CategoryTransformer(context: context)
-
+        
         let repository = GetSearchRepository<GetSearchLocaleDataSource, GetSearchRemoteDataSource, CategoryTransformer>(
             localeDataSource: localeDataSource,
             remoteDataSource: remoteDataSource,
             mapper: mapper
         )
-
+        
         let interactor = Interactor(repository: repository)
-
+        
         return GetSearchPresenter(useCase: interactor)
     }
-
+    
 }

@@ -36,12 +36,16 @@ public struct CategoryTransformer: Mapper {
             entity.isFavorite = false
             
             let mutableGenres = entity.mutableSetValue(forKey: "genres")
-            for genreResponse in categoryResponse.genres ?? [] {
-                let genreEntity = CategoryMovieGenreEntity(context: context)
-                genreEntity.name = genreResponse.name ?? "Unknown Genre"
-                mutableGenres.add(genreEntity)
-            }
             
+            if let genres = categoryResponse.genres {
+                for genre in genres {
+                    guard let genreId = genre.id else { continue }
+                    let genreEntity = MovieGenreEntity(context: context)
+                    genreEntity.id = Int32(genreId)
+                    genreEntity.name = genre.name ?? "Unknown Genre"
+                    mutableGenres.add(genreEntity)
+                }
+            }
             return entity
         }
     }
@@ -60,8 +64,9 @@ public struct CategoryTransformer: Mapper {
                 rating: category.rating,
                 voteCount: category.voteCount,
                 isFavorite: category.isFavorite,
-                genres: category.genresArray.map { MovieGenre(name: $0.name ?? "Unknown Genre") }
+                genres: Array(category.genres).compactMap { MovieGenre(name: $0.name ?? "Unknown") }
             )
         }
     }
+    
 }

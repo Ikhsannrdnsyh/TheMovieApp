@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="MovieModel">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="MovieModel">
     <entity name="Entity" representedClassName="Entity" syncable="YES"/>
     <entity name="MovieGenreEntity" representedClassName=".MovieGenreEntity" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="genres" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MoviesEntity" inverseName="genres" inverseEntity="MoviesEntity"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MoviesEntity" inverseName="genres" inverseEntity="MoviesEntity"/>
     </entity>
     <entity name="MoviesEntity" representedClassName="Category.MoviesEntity" syncable="YES">
         <attribute name="backdropPath" optional="YES" attributeType="String"/>
@@ -17,6 +18,6 @@
         <attribute name="runtime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="voteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenreEntity" inverseName="genres" inverseEntity="MovieGenreEntity"/>
+        <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenreEntity" inverseName="movie" inverseEntity="MovieGenreEntity"/>
     </entity>
 </model>

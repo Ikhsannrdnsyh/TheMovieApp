@@ -96,6 +96,11 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
     public static func == (lhs: CategoryDomainModel, rhs: CategoryDomainModel) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    public var genreText: String {
+        genres?.map { $0.name }.joined(separator: ", ") ?? "n/a"
+    }
+
 }
 
 public struct MovieGenre: Equatable, Decodable {
