@@ -38,16 +38,17 @@ struct PopularView: View {
                                 .padding()
                         } else {
                             ForEach(uniqueMovies, id: \.id) { movie in
-                                if let categoryType = MovieCategoryType(rawValue: movie.category ?? "") {
-                                    NavigationLink(destination: router.makeDetailView(for: movie, category: categoryType)) {
+                                if let categoryType = movie.category {
+                                    NavigationLink(destination: router.makeDetailView(for: movie, category: categoryType ?? .popular)) {
                                         PopularMovieRow(movies: movie)
                                             .padding(8)
                                     }
-                                } else {
+                                }
+                                else {
                                     Text("inValid".localized(identifier: "com.Ikhsan.TheMovieApp"))
                                         .foregroundColor(.red)
                                 }
-
+                                
                                 
                             }
                         }
@@ -62,7 +63,7 @@ struct PopularView: View {
             }
         }
     }
-
+    
     private func removeDuplicates(from movies: [CategoryDomainModel]) -> [CategoryDomainModel] {
         var seen = Set<Int32>()
         return movies.reduce(into: [CategoryDomainModel]()) { result, movie in

@@ -18,7 +18,7 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
     public let overview: String
     public let posterPath: String?
     public let backdropPath: String?
-    public let category: String?
+    public let category: MovieCategoryType?
     public let releaseDate: Date?
     public let runtime: Int32?
     public let rating: Double
@@ -32,12 +32,12 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
             overview: String,
             posterPath: String?,
             backdropPath: String?,
-            category: String?,
+            category: MovieCategoryType?,
             releaseDate: Date?,
             runtime: Int32?,
             rating: Double,
             voteCount: Int32,
-            isFavorite: Bool,
+            isFavorite: Bool?,
             genres: [MovieGenre]?
         ) {
             self.id = id
@@ -50,7 +50,7 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
             self.runtime = runtime
             self.rating = rating
             self.voteCount = voteCount
-            self.isFavorite = isFavorite
+            self.isFavorite = isFavorite ?? false
             self.genres = genres
         }
     

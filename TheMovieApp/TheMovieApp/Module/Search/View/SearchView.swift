@@ -32,6 +32,7 @@ struct SearchView: View {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if presenter.query.isEmpty || presenter.movies.isEmpty {
+                    
                     VStack {
                         Image(systemName: "film")
                             .resizable()
@@ -44,9 +45,11 @@ struct SearchView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
+                    
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                            ForEach(Array(presenter.movies.enumerated()), id: \.element.id) { index, movie in
+                            let uniqueMovies = Array(Set(presenter.movies))
+                            ForEach(uniqueMovies, id: \.id) { movie in
                                 NavigationLink(destination: router.makeDetailView(for: movie, category: .search)) {
                                     NowPlayingMovieRow(movies: movie)
                                         .contentShape(Rectangle())
@@ -59,6 +62,10 @@ struct SearchView: View {
             }
             .navigationTitle("searchTitle".localized(identifier: "com.Ikhsan.TheMovieApp"))
             .navigationBarTitleDisplayMode(.large)
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("FavoriteStatusChanged"))) { _ in
+                print("🔄 Refreshing search results after favorite toggle")
+                presenter.executeSearch(query: presenter.query)
+            }
         }
     }
 }
@@ -76,7 +83,7 @@ struct SearchBar: View {
                 .onChange(of: query) { newValue in
                     if newValue.isEmpty {
                         DispatchQueue.main.async {
-                            onClear() 
+                            onClear()
                         }
                     }
                 }

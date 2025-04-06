@@ -7,7 +7,7 @@
 
 import Core
 
-public enum MovieCategoryType: String {
+public enum MovieCategoryType: String, Codable {
     case nowPlaying = "now_playing"
     case popular = "popular"
     case search = "search"

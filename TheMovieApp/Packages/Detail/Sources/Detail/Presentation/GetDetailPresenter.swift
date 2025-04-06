@@ -44,14 +44,16 @@ where Interactor.Request == Request, Interactor.Response == Response {
                 switch completion {
                 case .failure(let error):
                     self.error = error.localizedDescription
-                    print("Error: \(error.localizedDescription)")
+                    print("❌ Error: \(error.localizedDescription)")
                 case .finished:
                     break
                 }
             }, receiveValue: { movie in
                 self.movie = movie
-                self.isFavorite = (movie as? CategoryDomainModel)?.isFavorite ?? false
-                print("Detail Movie: \(String(describing: movie))") 
+                if let movie = movie as? CategoryDomainModel {
+                    self.isFavorite = movie.isFavorite
+                }
+                print("✅ Detail Movie: \(String(describing: movie))")
             })
             .store(in: &cancellables)
     }
@@ -71,29 +73,36 @@ where Interactor.Request == Request, Interactor.Response == Response {
         self.movie = movie as? Response
 
         let context = CoreDataManager.shared.persistentContainer.viewContext
-        guard let movieEntity = FavoriteTransformer.transformDomainToEntity(domain: movie, context: context) else {
-            print("❌ Error: Gagal mengonversi CategoryDomainModel ke MoviesEntity")
-            return
+        
+        // Coba fetch entity dari database
+        var movieEntity = FavoriteTransformer.transformDomainToEntity(domain: movie, context: context)
+        
+        // Jika entity tidak ditemukan, buat entitas baru
+        if movieEntity == nil {
+            movieEntity = MoviesEntity(context: context)
+            movieEntity?.id = movie.id
+            movieEntity?.title = movie.title
+            movieEntity?.overview = movie.overview
+            movieEntity?.posterPath = movie.posterPath
+            movieEntity?.backdropPath = movie.backdropPath
+            movieEntity?.categoryEnum = movie.category
+            movieEntity?.releaseDate = movie.releaseDate
+            movieEntity?.runtime = movie.runtime ?? 0
+            movieEntity?.rating = movie.rating
+            movieEntity?.voteCount = movie.voteCount
+            movieEntity?.isFavorite = movie.isFavorite
+        } else {
+            movieEntity?.isFavorite = movie.isFavorite
         }
-
-        favoriteRepository.updateFavoriteStatus(for: movieEntity)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    self.error = error.localizedDescription
-                    print("❌ Error menyimpan favorit: \(error.localizedDescription)")
-                case .finished:
-                    print("✅ Perubahan status favorit berhasil disimpan ke Core Data.")
-                    NotificationCenter.default.post(name: NSNotification.Name("FavoriteStatusChanged"), object: nil)
-                }
-            }, receiveValue: { success in
-                if success {
-                    print("✅ Core Data sukses menyimpan perubahan favorit.")
-                } else {
-                    print("⚠️ Gagal menyimpan perubahan favorit ke Core Data.")
-                }
-            })
-            .store(in: &cancellables)
+        
+        // Simpan ke Core Data
+        do {
+            try context.save()
+            print("✅ Core Data sukses menyimpan perubahan favorit.")
+            NotificationCenter.default.post(name: NSNotification.Name("FavoriteStatusChanged"), object: nil)
+        } catch {
+            print("❌ Error menyimpan favorit ke Core Data: \(error.localizedDescription)")
+            self.error = error.localizedDescription
+        }
     }
 }

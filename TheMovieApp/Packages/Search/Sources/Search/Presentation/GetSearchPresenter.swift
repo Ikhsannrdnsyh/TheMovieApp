@@ -10,7 +10,6 @@ import SwiftUI
 import Core
 import Category
 
-
 @MainActor
 public class GetSearchPresenter<Request, Response, Interactor: UseCase>: ObservableObject
 where Interactor.Request == Request, Interactor.Response == Response {
@@ -37,6 +36,7 @@ where Interactor.Request == Request, Interactor.Response == Response {
                 guard let self = self else { return }
                 if newQuery.isEmpty {
                     self.searchResults = nil
+                    self.movies = []
                 } else {
                     self.executeSearch(query: newQuery)
                 }
@@ -66,11 +66,13 @@ where Interactor.Request == Request, Interactor.Response == Response {
                 self.searchResults = results
 
                 if let movies = results as? [CategoryDomainModel] {
-                    self.movies = movies
-                    print("🎥 Movies list updated: \(movies)")
+                    let uniqueMovies = Array(Set(movies)) // 🔥 Hapus duplikat
+                        .sorted(by: { $0.id < $1.id }) // 🔄 Urutkan agar UI konsisten
+                    
+                    self.movies = uniqueMovies
+                    print("🎥 Movies list updated (no duplicates): \(uniqueMovies.count) items")
                 }
             })
             .store(in: &cancellables)
     }
-
 }

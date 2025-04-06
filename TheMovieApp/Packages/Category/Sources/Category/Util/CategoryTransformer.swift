@@ -54,7 +54,7 @@ public struct CategoryTransformer: Mapper {
                 overview: category.overview,
                 posterPath: ImageUrlHelper.buildPosterUrl(from: category.posterPath),
                 backdropPath: ImageUrlHelper.buildBackdropUrl(from: category.backdropPath),
-                category: category.category,
+                category: category.category.flatMap { MovieCategoryType(rawValue: $0) },
                 releaseDate: category.releaseDate,
                 runtime: category.runtime,
                 rating: category.rating,

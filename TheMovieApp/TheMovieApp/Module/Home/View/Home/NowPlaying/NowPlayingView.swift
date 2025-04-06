@@ -39,16 +39,17 @@ struct NowPlayingView: View {
                                 .padding()
                         } else {
                             ForEach(uniqueMovies, id: \.id) { movie in
-                                if let categoryType = MovieCategoryType(rawValue: movie.category ?? "") {
-                                    NavigationLink(destination: router.makeDetailView(for: movie, category: categoryType)) {
+                                if let categoryType = movie.category {
+                                    NavigationLink(destination: router.makeDetailView(for: movie, category: categoryType ?? .nowPlaying)) {
                                         NowPlayingMovieRow(movies: movie)
                                             .padding(8)
                                     }
-                                } else {
+                                }
+                                else {
                                     Text("inValid".localized(identifier: "com.Ikhsan.TheMovieApp"))
                                         .foregroundColor(.red)
                                 }
-
+                                
                             }
                         }
                     }

@@ -67,7 +67,7 @@ Transformer.Domain == [CategoryDomainModel] {
     private func fetchFromRemote(query: String) -> AnyPublisher<[CategoryDomainModel], Error> {
         return remoteDataSource.execute(request: query)
             .map { response in
-                return mapper.transformResponseToEntity(response: response, category: "")
+                return mapper.transformResponseToEntity(response: response, category: "search")
             }
             .map { entities in
                 return mapper.transformEntityToDomain(entity: entities)

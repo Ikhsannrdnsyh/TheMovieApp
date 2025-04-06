@@ -51,7 +51,7 @@ FavoriteRemote.Response == [CategoryResponse] {
                             overview: movie.overview ?? "No overview available.",
                             posterPath: movie.posterPath,
                             backdropPath: movie.backdropPath,
-                            category: movie.category,
+                            category: movie.category.flatMap { MovieCategoryType(rawValue: $0) },
                             releaseDate: movie.releaseDate,
                             runtime: Int32(movie.runtime),
                             rating: movie.rating,

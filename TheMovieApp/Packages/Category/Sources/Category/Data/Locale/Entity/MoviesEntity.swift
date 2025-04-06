@@ -33,4 +33,16 @@ public class MoviesEntity: NSManagedObject {
     @objc public var genreNames: [String] {
         return genresArray.map { $0.name ?? "" }
     }
+    
+    
+    public var categoryEnum: MovieCategoryType? {
+        get {
+            guard let category = category else { return nil }
+            return MovieCategoryType(rawValue: category)
+        }
+        set {
+            category = newValue?.rawValue
+        }
+    }
+
 }

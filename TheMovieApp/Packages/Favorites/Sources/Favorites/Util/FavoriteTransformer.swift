@@ -25,7 +25,7 @@ public struct FavoriteTransformer {
             overview: response.overview ?? "No overview available.",
             posterPath: response.posterPath,
             backdropPath: response.backdropPath,
-            category: response.category,
+            category: response.category.flatMap { MovieCategoryType(rawValue: $0) }, 
             releaseDate: DateHelper.parseDate(response.releaseDate),
             runtime: response.runtime ?? 0,
             rating: response.rating ?? 0.0,
