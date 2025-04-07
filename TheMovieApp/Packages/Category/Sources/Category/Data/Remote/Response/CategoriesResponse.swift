@@ -25,9 +25,10 @@ public struct CategoryResponse: Decodable, Sendable {
     public let releaseDate: String?
     public let category: String?
     public let rating: Double?
-    public let runtime: Int32?
+    public let runtime: Int?
     public let voteCount: Int32?
     public let genres: [GenreResponse]?
+    public let genreIds: [Int]?
     public var isFavorite: Bool?
     
     
@@ -43,6 +44,7 @@ public struct CategoryResponse: Decodable, Sendable {
         case runtime
         case category
         case genres
+        case genreIds = "genre_ids"
         case isFavorite
     }
 }

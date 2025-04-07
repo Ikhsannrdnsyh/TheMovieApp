@@ -24,6 +24,7 @@ public class MoviesEntity: NSManagedObject {
     @NSManaged public var runtime: Int32
     @NSManaged public var voteCount: Int32
     @NSManaged public var isFavorite: Bool
+    @NSManaged public var genreIds: [Int]?
     @NSManaged public var genres: Set<MovieGenreEntity>
 
     public var genresArray: [MovieGenreEntity] {

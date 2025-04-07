@@ -1,8 +1,8 @@
 //
 //  MovieGenreEntity+CoreDataClass.swift
-//  TheMovieApp
+//  
 //
-//  Created by Mochamad Ikhsan Nurdiansyah on 01/01/25.
+//  Created by Mochamad Ikhsan Nurdiansyah on 07/04/25.
 //
 //
 

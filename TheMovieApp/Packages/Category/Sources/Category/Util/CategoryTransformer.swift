@@ -21,6 +21,9 @@ public struct CategoryTransformer: Mapper {
     }
     
     public func transformResponseToEntity(response: [CategoryResponse], category: String) -> [MoviesEntity] {
+        response.forEach {
+            print("📥 Incoming Response ID: \($0.id ?? 0), genres: \($0.genres?.map { $0.name ?? "-" } ?? []), genreIds: \($0.genreIds ?? [])")
+        }
         return response.map { categoryResponse in
             let entity = MoviesEntity(context: context)
             entity.id = Int32(categoryResponse.id ?? 0)
@@ -35,24 +38,39 @@ public struct CategoryTransformer: Mapper {
             entity.voteCount = Int32(categoryResponse.voteCount ?? 0)
             entity.isFavorite = false
             
+            if let ids = categoryResponse.genreIds {
+                entity.genreIds = ids.map { Int($0) }
+            } else if let genres = categoryResponse.genres {
+                let ids = genres.compactMap { $0.id }
+                entity.genreIds = ids
+            }
+            
             let mutableGenres = entity.mutableSetValue(forKey: "genres")
             
-            if let genres = categoryResponse.genres {
+            if let genres = categoryResponse.genres, !genres.isEmpty {
                 for genre in genres {
                     guard let genreId = genre.id else { continue }
                     let genreEntity = MovieGenreEntity(context: context)
                     genreEntity.id = Int32(genreId)
-                    genreEntity.name = genre.name ?? "Unknown Genre"
+                    genreEntity.name = genre.name ?? GenreHelper.genreName(for: genreId)
+                    mutableGenres.add(genreEntity)
+                }
+            } else if let genreIDs = categoryResponse.genreIds {
+                for genreID in genreIDs {
+                    let genreEntity = MovieGenreEntity(context: context)
+                    genreEntity.id = Int32(genreID)
+                    genreEntity.name = GenreHelper.genreName(for: genreID)
                     mutableGenres.add(genreEntity)
                 }
             }
+            
             return entity
         }
     }
     
     public func transformEntityToDomain(entity: [MoviesEntity]) -> [CategoryDomainModel] {
         return entity.map { category in
-            return CategoryDomainModel(
+            CategoryDomainModel(
                 id: category.id,
                 title: category.title,
                 overview: category.overview,
@@ -64,9 +82,11 @@ public struct CategoryTransformer: Mapper {
                 rating: category.rating,
                 voteCount: category.voteCount,
                 isFavorite: category.isFavorite,
-                genres: Array(category.genres).compactMap { MovieGenre(name: $0.name ?? "Unknown") }
+                genres: Array(category.genres).compactMap {
+                    ($0 as? MovieGenreEntity).flatMap { MovieGenre(name: $0.name ?? "Unknown") }
+                },
+                genreIds: (category.genreIds as? [Int]) ?? (category.genreIds as? [NSNumber])?.map { $0.intValue }
             )
         }
     }
-    
 }

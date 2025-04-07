@@ -18,10 +18,10 @@ public struct GetDetailRepository<
 DetailLocale.Request == Int,
 DetailLocale.Response == MoviesEntity,
 DetailRemote.Request == Int,
-DetailRemote.Response == [CategoryResponse],
-Transformer.Response == [CategoryResponse],
-Transformer.Entity == [MoviesEntity],
-Transformer.Domain == [CategoryDomainModel] {
+DetailRemote.Response == CategoryResponse,
+Transformer.Response == CategoryResponse,
+Transformer.Entity == MoviesEntity,
+Transformer.Domain == CategoryDomainModel {
     
     public typealias Request = Int
     public typealias Response = CategoryDomainModel
@@ -44,7 +44,7 @@ Transformer.Domain == [CategoryDomainModel] {
     }
     
     public func execute(request: Int?) -> AnyPublisher<CategoryDomainModel, Error> {
-        print("🟢 Debug: Request Masuk - \(String(describing: request))") // Debugging
+        print("🟢 Debug: Request Masuk - \(String(describing: request))")
         
         guard let movieId = request else {
             print("Error: Request tidak valid (nil)")
@@ -55,16 +55,8 @@ Transformer.Domain == [CategoryDomainModel] {
         print("Debug: Request Diterima - ID: \(movieId)")
         
         return localeDataSource.getMovieDetail(id: movieId)
-            .flatMap { entity -> AnyPublisher<CategoryDomainModel, Error> in
-                let domainModels = mapper.transformEntityToDomain(entity: [entity])
-                if let domainModel = domainModels.first {
-                    return Just(domainModel)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                } else {
-                    print("Error: Data di lokal tidak ditemukan, mengambil dari remote")
-                    return self.fetchFromRemote(movieId: movieId)
-                }
+            .map { entity in
+                return mapper.transformEntityToDomain(entity: entity)
             }
             .catch { _ in
                 print("Error: Gagal mengambil dari lokal, mencoba remote")
@@ -75,27 +67,19 @@ Transformer.Domain == [CategoryDomainModel] {
     
     private func fetchFromRemote(movieId: Int) -> AnyPublisher<CategoryDomainModel, Error> {
         return remoteDataSource.execute(request: movieId)
-            .map { response in
-                let entities = mapper.transformResponseToEntity(
+            .tryMap { response in
+                print("📥 Incoming Response ID: \(response.id ?? 0), genres: \(response.genres?.map { $0.name ?? "-" } ?? []), genreIds: \(response.genreIds ?? [])")
+
+                let entity = mapper.transformResponseToEntity(
                     response: response,
                     category: self.categoryType.rawValue.lowercased()
                 )
-                return entities
-            }
-            .tryMap { entities in
-                let domainModels = mapper.transformEntityToDomain(entity: entities)
-                
-                if let domainModel = domainModels.first {
-                    return domainModel
-                } else {
-                    throw NSError(
-                        domain: "EmptyData",
-                        code: 404,
-                        userInfo: [NSLocalizedDescriptionKey: "Data tidak ditemukan dari API"]
-                    )
-                }
+
+                try self.localeDataSource.addMovieDetail(entity: entity)
+
+                return mapper.transformEntityToDomain(entity: entity)
             }
             .eraseToAnyPublisher()
     }
-    
+
 }

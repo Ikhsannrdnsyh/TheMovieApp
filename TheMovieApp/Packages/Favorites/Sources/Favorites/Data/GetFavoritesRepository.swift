@@ -57,7 +57,8 @@ FavoriteRemote.Response == [CategoryResponse] {
                             rating: movie.rating,
                             voteCount: Int32(movie.voteCount),
                             isFavorite: movie.isFavorite,
-                            genres: movie.genres.compactMap { MovieGenre(name: $0.name ?? "Unknown") }
+                            genres: movie.genres.compactMap { MovieGenre(name: $0.name ?? "Unknown") },
+                            genreIds: movie.genreIds ?? []
                         )
                     })
                     .setFailureType(to: Error.self)

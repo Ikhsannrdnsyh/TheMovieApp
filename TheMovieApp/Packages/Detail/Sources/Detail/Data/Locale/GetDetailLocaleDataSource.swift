@@ -73,4 +73,9 @@ public struct GetDetailLocaleDataSource: @preconcurrency DetailLocaleDataSource{
         }
         return false
     }
+    
+    public func addMovieDetail(entity: MoviesEntity) throws {
+            context.insert(entity)
+            try context.save()
+        }
 }

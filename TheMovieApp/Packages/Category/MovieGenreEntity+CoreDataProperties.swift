@@ -1,15 +1,14 @@
 //
 //  MovieGenreEntity+CoreDataProperties.swift
-//  TheMovieApp
+//  
 //
-//  Created by Mochamad Ikhsan Nurdiansyah on 01/01/25.
+//  Created by Mochamad Ikhsan Nurdiansyah on 07/04/25.
 //
 //
 
 import Foundation
 import CoreData
 import Category
-
 
 extension MovieGenreEntity {
 
@@ -18,10 +17,7 @@ extension MovieGenreEntity {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var genres: MoviesEntity?
-
-}
-
-extension MovieGenreEntity : Identifiable {
+    @NSManaged public var id: Int32
+    @NSManaged public var movie: MoviesEntity?
 
 }

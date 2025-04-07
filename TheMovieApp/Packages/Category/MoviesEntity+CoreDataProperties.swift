@@ -11,7 +11,6 @@ import CoreData
 
 
 extension MoviesEntity {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MoviesEntity> {
         return NSFetchRequest<MoviesEntity>(entityName: "MoviesEntity")
     }

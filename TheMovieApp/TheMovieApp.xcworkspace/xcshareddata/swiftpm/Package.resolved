@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Ikhsannrdnsyh/TheMovieApp-Core",
       "state" : {
-        "revision" : "3bf6a98affd3229a1f2bc3d6b5d8a6ddf1c14329",
-        "version" : "1.0.1"
+        "revision" : "84c95fbac60e2d6c0959be92130cc99d2348c589",
+        "version" : "1.0.2"
       }
     }
   ],

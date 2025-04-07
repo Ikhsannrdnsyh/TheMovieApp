@@ -15,9 +15,10 @@ public final class CoreDataManager {
     private init() {}
     
     public lazy var persistentContainer: NSPersistentContainer = {
+        ValueTransformer.setValueTransformer(IntArrayTransformer(), forName: NSValueTransformerName("IntArrayTransformer"))
         let modelName = "MovieModel"
         
-        guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd"),
+        guard let modelURL = Bundle(for: CoreDataManager.self).url(forResource: modelName, withExtension: "momd"),
               let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Gagal memuat model Core Data \(modelName). Pastikan model tersedia di project.")
         }

@@ -27,11 +27,12 @@ public struct FavoriteTransformer {
             backdropPath: response.backdropPath,
             category: response.category.flatMap { MovieCategoryType(rawValue: $0) }, 
             releaseDate: DateHelper.parseDate(response.releaseDate),
-            runtime: response.runtime ?? 0,
+            runtime: Int32(response.runtime ?? 0),
             rating: response.rating ?? 0.0,
             voteCount: response.voteCount ?? 0,
             isFavorite: response.isFavorite ?? false,
-            genres: response.genres?.compactMap { MovieGenre(name: $0.name ?? "Unknown") }
+            genres: response.genres?.compactMap { MovieGenre(name: $0.name ?? "Unknown") },
+            genreIds: response.genreIds ?? []
         )
     }
     public static func transformDomainToEntity(domain: CategoryDomainModel, context: NSManagedObjectContext) -> MoviesEntity? {

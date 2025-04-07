@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		010B735F2D9920C1003A05A9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 017649012D98689200F442DD /* XCTest.framework */; platformFilter = ios; };
 		010B73602D9920C1003A05A9 /* XCTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 017649012D98689200F442DD /* XCTest.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		010B73F52D9927F1003A05A9 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 010B73F42D9927F1003A05A9 /* Core */; };
 		017642F92D86D4BD00F442DD /* Category in Frameworks */ = {isa = PBXBuildFile; productRef = 017642F82D86D4BD00F442DD /* Category */; };
 		017644A82D8FED8300F442DD /* Detail in Frameworks */ = {isa = PBXBuildFile; productRef = 017644A72D8FED8300F442DD /* Detail */; };
 		0176463E2D91466400F442DD /* Detail in Frameworks */ = {isa = PBXBuildFile; productRef = 0176463D2D91466400F442DD /* Detail */; };
@@ -23,6 +22,7 @@
 		019680872D76E25A00994406 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 019680852D76E22E00994406 /* Secret.xcconfig */; };
 		01AA0C702D1AFF09009AAB02 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 01AA0C6F2D1AFF09009AAB02 /* CachedAsyncImage */; };
 		01AA0C732D1AFF1D009AAB02 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 01AA0C722D1AFF1D009AAB02 /* Alamofire */; };
+		01CAF7A92DA38E6500CFBEDB /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 01CAF7A82DA38E6500CFBEDB /* Core */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +105,7 @@
 				017648F22D9859F500F442DD /* Common.framework in Frameworks */,
 				017648622D93D99A00F442DD /* Search in Frameworks */,
 				017647D82D914EA700F442DD /* Favorites in Frameworks */,
-				010B73F52D9927F1003A05A9 /* Core in Frameworks */,
+				01CAF7A92DA38E6500CFBEDB /* Core in Frameworks */,
 				017644A82D8FED8300F442DD /* Detail in Frameworks */,
 				01AA0C702D1AFF09009AAB02 /* CachedAsyncImage in Frameworks */,
 				017646C82D914E5F00F442DD /* Favorites in Frameworks */,
@@ -211,7 +211,7 @@
 				017646C72D914E5F00F442DD /* Favorites */,
 				017647D72D914EA700F442DD /* Favorites */,
 				017648612D93D99A00F442DD /* Search */,
-				010B73F42D9927F1003A05A9 /* Core */,
+				01CAF7A82DA38E6500CFBEDB /* Core */,
 			);
 			productName = TheMovieApp;
 			productReference = 01AA0C432D1AF9D9009AAB02 /* TheMovieApp.app */;
@@ -253,7 +253,7 @@
 				0176463C2D91466400F442DD /* XCLocalSwiftPackageReference "Packages/Detail" */,
 				017647D62D914EA700F442DD /* XCLocalSwiftPackageReference "Packages/Favorites" */,
 				017648602D93D99A00F442DD /* XCLocalSwiftPackageReference "Packages/Search" */,
-				010B73F32D9927F1003A05A9 /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */,
+				01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 01AA0C442D1AF9D9009AAB02 /* Products */;
@@ -626,14 +626,6 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		010B73F32D9927F1003A05A9 /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Ikhsannrdnsyh/TheMovieApp-Core";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
-			};
-		};
 		01AA0C6E2D1AFF09009AAB02 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
@@ -650,14 +642,17 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Ikhsannrdnsyh/TheMovieApp-Core";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		010B73F42D9927F1003A05A9 /* Core */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 010B73F32D9927F1003A05A9 /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */;
-			productName = Core;
-		};
 		017642F82D86D4BD00F442DD /* Category */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Category;
@@ -691,6 +686,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01AA0C712D1AFF1D009AAB02 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		01CAF7A82DA38E6500CFBEDB /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */;
+			productName = Core;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -25,6 +25,7 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
     public let voteCount: Int32
     public var isFavorite: Bool
     public let genres: [MovieGenre]?
+    public let genreIds: [Int]?
     
     public init(
             id: Int32,
@@ -38,7 +39,9 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
             rating: Double,
             voteCount: Int32,
             isFavorite: Bool?,
-            genres: [MovieGenre]?
+            genres: [MovieGenre]?,
+            genreIds: [Int]?
+            
         ) {
             self.id = id
             self.title = title
@@ -52,6 +55,7 @@ public struct CategoryDomainModel: Equatable, Decodable, Identifiable, Hashable 
             self.voteCount = voteCount
             self.isFavorite = isFavorite ?? false
             self.genres = genres
+            self.genreIds = genreIds
         }
     
     

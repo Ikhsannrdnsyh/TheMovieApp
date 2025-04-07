@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Packages/Category/MovieGenreEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Packages/Category/MovieGenreEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:TheMovieApp.xcodeproj">
    </FileRef>
    <FileRef

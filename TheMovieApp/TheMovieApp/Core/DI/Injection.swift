@@ -37,46 +37,52 @@ final class Injection: NSObject {
     ) -> GetDetailPresenter<
         Int,
         CategoryDomainModel,
-        Interactor<
-            Int,
-            CategoryDomainModel,
-            GetDetailRepository<
-                GetDetailLocaleDataSource,
-                GetDetailRemoteDataSource,
-                DetailTransformer
-            >
-        >
+        Interactor<Int, CategoryDomainModel, GetDetailRepository<GetDetailLocaleDataSource, GetDetailRemoteDataSource, DetailTransformer>>
     > {
+        
         let context = CoreDataManager.shared.context
+        
         let localeDataSource = GetDetailLocaleDataSource(context: context)
         let remoteDataSource = GetDetailRemoteDataSource()
+        
         let mapper = DetailTransformer(context: context)
         
-        let repository = GetDetailRepository(
+        let repository = GetDetailRepository<
+            GetDetailLocaleDataSource,
+            GetDetailRemoteDataSource,
+            DetailTransformer
+        >(
             localeDataSource: localeDataSource,
             remoteDataSource: remoteDataSource,
             mapper: mapper,
             categoryType: categoryType
         )
         
+        // Interactor untuk detail use case
         let interactor = Interactor(repository: repository)
         
+        // Favorite DataSource dan Repository
         let favoriteLocaleDataSource = GetFavoriteLocaleDataSource()
         let favoriteRemoteDataSource = GetFavoriteRemoteDataSource()
         let favoriteTransformer = FavoriteTransformer()
         
-        let favoriteRepository = GetFavoritesRepository(
+        let favoriteRepository = GetFavoritesRepository<
+            GetFavoriteLocaleDataSource,
+            GetFavoriteRemoteDataSource
+        >(
             localDataSource: favoriteLocaleDataSource,
             remoteDataSource: favoriteRemoteDataSource,
             transformer: favoriteTransformer
         )
-        
+
+        // Presenter akhir yang dikembalikan
         return GetDetailPresenter(
             movieId: Int(movieId),
             useCase: interactor,
             favoriteRepository: favoriteRepository
         )
     }
+
     
     @MainActor
     func provideFavoriteMovies() -> GetFavoritePresenter<

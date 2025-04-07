@@ -14,6 +14,7 @@ import Common
 
 struct DetailView: View {
     @ObservedObject var presenter: GetDetailPresenter<Int, CategoryDomainModel, Interactor<Int, CategoryDomainModel, GetDetailRepository<GetDetailLocaleDataSource, GetDetailRemoteDataSource, DetailTransformer>>>
+    @State private var isFirstAppear = true
     
     var body: some View {
         ZStack {
@@ -56,7 +57,10 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            presenter.getMovieDetail()
+            if isFirstAppear {
+                presenter.getMovieDetail()
+                isFirstAppear = false
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("FavoriteStatusChanged"))) { _ in
             print("🔄 Refreshing movie detail after favorite toggle")
