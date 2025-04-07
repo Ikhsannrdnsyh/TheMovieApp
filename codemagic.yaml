@@ -4,7 +4,7 @@ workflows:
     environment:
       xcode: latest
       vars:
-          XCODE_PROJECT: "TheMovieApp.xcodeproj"
+          XCODE_PROJECT: "TheMovieApp/TheMovieApp.xcodeproj"
           XCODE_SCHEME: "TheMovieApp"
     scripts:
       - name: Run tests
