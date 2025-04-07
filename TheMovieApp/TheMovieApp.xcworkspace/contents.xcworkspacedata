@@ -13,4 +13,7 @@
    <FileRef
       location = "container:../Common/Common/Common.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:codemagic.yaml">
+   </FileRef>
 </Workspace>

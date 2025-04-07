@@ -175,6 +175,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				01CAF7B32DA3A8DA00CFBEDB /* PBXTargetDependency */,
+				01CAF7B12DA3A8A900CFBEDB /* PBXTargetDependency */,
+				01CAF7AD2DA3A88800CFBEDB /* PBXTargetDependency */,
 				014086CD2D76C36800DB2B44 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -249,8 +252,6 @@
 			packageReferences = (
 				01AA0C6E2D1AFF09009AAB02 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				01AA0C712D1AFF1D009AAB02 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				017642F72D86D4BD00F442DD /* XCLocalSwiftPackageReference "Packages/Category" */,
-				0176463C2D91466400F442DD /* XCLocalSwiftPackageReference "Packages/Detail" */,
 				017647D62D914EA700F442DD /* XCLocalSwiftPackageReference "Packages/Favorites" */,
 				017648602D93D99A00F442DD /* XCLocalSwiftPackageReference "Packages/Search" */,
 				01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */,
@@ -331,6 +332,18 @@
 			target = 01AA0C422D1AF9D9009AAB02 /* TheMovieApp */;
 			targetProxy = 014086CC2D76C36800DB2B44 /* PBXContainerItemProxy */;
 		};
+		01CAF7AD2DA3A88800CFBEDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 01CAF7AC2DA3A88800CFBEDB /* Category */;
+		};
+		01CAF7B12DA3A8A900CFBEDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 01CAF7B02DA3A8A900CFBEDB /* Core */;
+		};
+		01CAF7B32DA3A8DA00CFBEDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 01CAF7B22DA3A8DA00CFBEDB /* Alamofire */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -359,6 +372,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ikhsan.TheMovieAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheMovieApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TheMovieApp";
@@ -378,6 +392,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ikhsan.TheMovieAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheMovieApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TheMovieApp";
@@ -607,14 +622,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		017642F72D86D4BD00F442DD /* XCLocalSwiftPackageReference "Packages/Category" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/Category;
-		};
-		0176463C2D91466400F442DD /* XCLocalSwiftPackageReference "Packages/Detail" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/Detail;
-		};
 		017647D62D914EA700F442DD /* XCLocalSwiftPackageReference "Packages/Favorites" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/Favorites;
@@ -691,6 +698,20 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */;
 			productName = Core;
+		};
+		01CAF7AC2DA3A88800CFBEDB /* Category */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Category;
+		};
+		01CAF7B02DA3A8A900CFBEDB /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01CAF7A72DA38E6500CFBEDB /* XCRemoteSwiftPackageReference "TheMovieApp-Core" */;
+			productName = Core;
+		};
+		01CAF7B22DA3A8DA00CFBEDB /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01AA0C712D1AFF1D009AAB02 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
