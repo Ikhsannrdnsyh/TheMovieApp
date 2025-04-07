@@ -7,22 +7,25 @@
 
 import XCTest
 @testable import TheMovieApp
+@testable import Category
 
 final class MovieModelTests: XCTestCase {
 
     func testMovieModelInitialization() {
-        let movie = MovieModel(
+        let movie = CategoryDomainModel(
             id: 950396,
             title: "The Gorge",
             overview: "Two highly trained",
             posterPath: "/7iMBZzVZtG0oBug4TfqDb9ZxAOa.jpg",
             backdropPath: "/9nhjGaFLKtddDPtPaX5EmKqsWdH.jpg",
-            releaseDate: Date(timeIntervalSince1970: 1739379600), // 2025-02-13
+            category: MovieCategoryType.nowPlaying,
+            releaseDate: Date(timeIntervalSince1970: 1739379600),
             runtime: 148,
             rating: 8.8,
             voteCount: 1575,
             isFavorite: false,
-            genres: [MovieGenre(name: "Action"), MovieGenre(name: "Sci-Fi")]
+            genres: [MovieGenre(name: "Action"), MovieGenre(name: "Sci-Fi")],
+            genreIds: [1]
         )
 
         XCTAssertEqual(movie.id, 950396)

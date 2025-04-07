@@ -112,13 +112,13 @@ class MockUseCase: UseCase {
                     overview: "Overview 1",
                     posterPath: nil,
                     backdropPath: nil,
-                    category: "Action",
+                    category: MovieCategoryType.nowPlaying,
                     releaseDate: nil,
                     runtime: nil,
                     rating: 7.5,
                     voteCount: 100,
                     isFavorite: false,
-                    genres: nil
+                    genres: nil, genreIds: [0]
                 ),
                 CategoryDomainModel(
                     id: 2,
@@ -126,13 +126,13 @@ class MockUseCase: UseCase {
                     overview: "Overview 2",
                     posterPath: nil,
                     backdropPath: nil,
-                    category: "Drama",
+                    category: MovieCategoryType.nowPlaying,
                     releaseDate: nil,
                     runtime: nil,
                     rating: 8.0,
                     voteCount: 200,
                     isFavorite: true,
-                    genres: nil
+                    genres: nil, genreIds: [0]
                 )
             ]
 
